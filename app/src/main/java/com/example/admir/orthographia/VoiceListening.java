@@ -8,6 +8,7 @@ import android.widget.Button;
 
 public class VoiceListening extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +25,7 @@ public class VoiceListening extends AppCompatActivity {
             });
 
     }
+
 
 
 

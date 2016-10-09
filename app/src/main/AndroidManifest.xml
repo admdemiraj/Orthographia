@@ -17,7 +17,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".VoiceListening" android:screenOrientation="landscape"></activity>
+        <activity android:name=".VoiceListening" android:screenOrientation="landscape" android:imeOptions="flagNoExtractUi"></activity>
     </application>
 
 </manifest>

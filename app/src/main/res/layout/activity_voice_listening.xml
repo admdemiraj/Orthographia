@@ -40,7 +40,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
+        android:inputType="text"
         android:ems="10"
         android:id="@+id/editText"
         android:layout_marginTop="105dp"
@@ -49,8 +49,33 @@
         android:contextClickable="true"
         android:editable="true"
         android:lines="1"
-        android:shadowColor="@color/colorAccent"
-        android:textSize="30sp"/>
+        android:shadowColor="@color/colorPrimaryDark"
+        android:textSize="24sp"
+        android:imeOptions="flagNoExtractUi"
+
+        android:singleLine="true"
+        android:fontFamily="sans-serif-smallcaps"
+        android:textColorLink="?attr/actionMenuTextColor"
+        android:textColorHint="@color/colorPrimaryDark"
+        android:textStyle="normal|bold|italic"
+        android:allowUndo="false"
+        android:cursorVisible="true"
+        android:textCursorDrawable="?attr/actionBarItemBackground"
+        android:background="?android:attr/editTextBackground"
+        android:textColor="?attr/colorPrimaryDark"
+        android:maxLength="16" />
+
+    <Button
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/button2"
+        android:elevation="0dp"
+        android:background="@drawable/roundedbutton"
+        android:layout_marginBottom="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="180dp"
+        android:text="Έλεγχος" />
 
 
 </RelativeLayout>
