@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -35,6 +37,10 @@ public class VoiceListening extends AppCompatActivity {
         final Button easyButton = (Button) findViewById(R.id.easy_btn);
         final Button mediumButton = (Button) findViewById(R.id.medium_btn);
         final Button hardButton = (Button) findViewById(R.id.hard_btn);
+        final EditText editText = (EditText) findViewById(R.id.editText);
+        final Button solveButton = (Button) findViewById(R.id.solve_btn);
+        final Button nextButton = (Button) findViewById(R.id.next_btn);
+        final Button explainButton = (Button) findViewById(R.id.explain_btn);
 
         if (bundle != null) {
             answerNumber = bundle.getString("key");
@@ -44,24 +50,89 @@ public class VoiceListening extends AppCompatActivity {
         }
 
 
+
+        try{
+final TextView textView= (TextView) findViewById(R.id.textView2);
+        textView.setText(findWordByNumber(answerNumber));
+        }catch (IOException e){
+            throw new RuntimeException(e);
+        }
+
+
+
         playMedia();
 
         changeDifficulty();
 
 
-      setDifficultyForTheNewLevel(answerNumber,easyButton,mediumButton,hardButton);
+         setDifficultyForTheNewLevel(answerNumber,easyButton,mediumButton,hardButton);
 
 
-        checkIfTheAnswerIsCorrect(answer, answerNumber);
+        checkIfTheAnswerIsCorrect(answerNumber,editText);
+
+        getSolution(solveButton,editText,answerNumber);
+
+        goToNextWord(nextButton);
+
+        findWordsMeaning(explainButton);
 
         try{
             Log.i("GGGGGGGGGGGGG", "fffffffffff" );
-            Log.d("GGGGGGGGGGGGG", findWordByNumber(answer,answerNumber) );
+            Log.d("GGGGGGGGGGGGG", findWordByNumber(answerNumber) );
         }catch (IOException e){
             throw new RuntimeException(e);
         }
 
     }
+
+
+
+    public void findWordsMeaning(Button explainButton){
+
+        explainButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Uri uri = Uri.parse("http://www.google.com"); // missing 'http://' will cause crashed
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+
+            }
+        });
+
+
+    }
+
+
+    public void goToNextWord(Button nextButton){
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                    startVoiceListening(sellectRandomWordAccordingToDifficulty());
+
+            }
+        });
+
+    }
+
+
+    public void getSolution (final Button solveButton,final EditText editText,final String answerNumber){
+
+        solveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                editText.setText(findWordByNumber(answerNumber));
+                }catch (IOException e){
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+    }
+
+
 
 public void setDifficultyForTheNewLevel(String aswerNumber,Button easyButton,Button mediumButton,Button hardButton){
     ArrayList<String> easy = new ArrayList<String>();
@@ -117,6 +188,7 @@ else if(mediumButton.isPressed()){
                 easyButton.setPressed(true);
                 mediumButton.setPressed(false);
                 hardButton.setPressed(false);
+                startVoiceListening(sellectRandomWordAccordingToDifficulty());
                 return true;
             }
         });
@@ -127,6 +199,7 @@ else if(mediumButton.isPressed()){
                 mediumButton.setPressed(true);
                 easyButton.setPressed(false);
                 hardButton.setPressed(false);
+                startVoiceListening(sellectRandomWordAccordingToDifficulty());
                 return true;
             }
         });
@@ -138,6 +211,7 @@ else if(mediumButton.isPressed()){
                 hardButton.setPressed(true);
                 mediumButton.setPressed(false);
                 easyButton.setPressed(false);
+                startVoiceListening(sellectRandomWordAccordingToDifficulty());
                 return true;
             }
         });
@@ -158,15 +232,15 @@ else if(mediumButton.isPressed()){
 
     }
 
-    public void checkIfTheAnswerIsCorrect(final String answer, final String answerNumber) {
+    public void checkIfTheAnswerIsCorrect(final String answerNumber,final EditText editText) {
         Button checkIfCorrect = (Button) findViewById(R.id.check_if_correct);
-        final EditText editText = (EditText) findViewById(R.id.editText);
+
 
         checkIfCorrect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    if (findWordByNumber(answer, answerNumber).equals(editText.getText().toString())) {
+                    if (findWordByNumber( answerNumber).equals(editText.getText().toString())) {
 
                         Toast.makeText(getBaseContext(), "ΣΩΣΤΑ!!!!", Toast.LENGTH_SHORT).show();
                         startVoiceListening(sellectRandomWordAccordingToDifficulty());
@@ -181,8 +255,8 @@ else if(mediumButton.isPressed()){
     }
 
 
-    public String findWordByNumber(String answer, String answerNumber) throws IOException {
-
+    public String findWordByNumber( String answerNumber) throws IOException {
+        String answer="smthng";
         Context context = getApplicationContext();
         InputStream inputStream = context.getResources().openRawResource(R.raw.words);
         InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
