@@ -3,10 +3,13 @@ package com.example.admir.orthographia;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.util.Log;
@@ -21,16 +24,25 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Random;
+import android.view.View.OnClickListener;
 
 
 public class VoiceListening extends AppCompatActivity {
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_voice_listening);
+
+
+
+
+
         Bundle bundle = getIntent().getExtras();
         final String answerNumber;
         final String answer = "nai";
@@ -57,6 +69,27 @@ final TextView textView= (TextView) findViewById(R.id.textView2);
         }catch (IOException e){
             throw new RuntimeException(e);
         }
+
+
+/*
+
+        Resources res =this.getResources();
+// Change locale settings in the app.
+String language_code="el";
+        DisplayMetrics dm = res.getDisplayMetrics();
+
+        android.content.res.Configuration conf = res.getConfiguration();
+        System.out.println("Defaulffffffffffffffffffffft language name (default): " +
+               conf.locale.getDisplayLanguage());
+       conf.locale = new Locale(language_code.toLowerCase());
+        res.updateConfiguration(conf, dm);
+        System.out.println("Defaulttttttt language name (default): " +
+                conf.locale.getDisplayLanguage());
+
+
+*/
+
+
 
 
 
@@ -86,12 +119,12 @@ final TextView textView= (TextView) findViewById(R.id.textView2);
     }
 
 
-
     public void findWordsMeaning(Button explainButton){
 
         explainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
 
                 Uri uri = Uri.parse("http://www.google.com"); // missing 'http://' will cause crashed
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
@@ -106,8 +139,10 @@ final TextView textView= (TextView) findViewById(R.id.textView2);
 
     public void goToNextWord(Button nextButton){
         nextButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+
 
                     startVoiceListening(sellectRandomWordAccordingToDifficulty());
 
@@ -126,6 +161,7 @@ final TextView textView= (TextView) findViewById(R.id.textView2);
                 editText.setText(findWordByNumber(answerNumber));
                 }catch (IOException e){
                     throw new RuntimeException(e);
+
                 }
             }
         });
@@ -221,7 +257,7 @@ else if(mediumButton.isPressed()){
 
     public void playMedia() {
         Button playButton = (Button) findViewById(R.id.play_btn);
-        final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.mpthreetest);
+        final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.ofelimos);
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
