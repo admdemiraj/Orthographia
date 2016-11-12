@@ -7,8 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
+import java.io.IOException;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,7 +30,17 @@ public class MainActivity extends AppCompatActivity {
 
         System.out.println("OOOOOOOOOOOOOOOOOOOOOOOO"+locale.getCountry()+locale.getDisplayLanguage());
 
+        Button button=(Button) findViewById(R.id.button7);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                   startIntroduction();
+
+
+
+            }
+        });
 
 
     }
@@ -37,8 +49,13 @@ public class MainActivity extends AppCompatActivity {
     public void startVoiceActivity(View view) {
         Intent intent = new Intent(this, VoiceListening.class);
         startActivity(intent);
+
     }
 
+    public void startIntroduction() {
+        Intent intent = new Intent(this, Introduction.class);
+        startActivity(intent);
 
+    }
 
 }

@@ -20,7 +20,8 @@
         android:layout_marginStart="13dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout">
 
         <Button
             android:layout_width="239dp"
@@ -40,11 +41,23 @@
             android:layout_width="202dp"
             android:layout_height="wrap_content"
             android:id="@+id/button7"
-            android:onClick="startVoiceActivity"
+            android:onClick="startIntroduction (MainActivity)"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:background="@drawable/sxetikabutton"
             android:layout_marginLeft="40dp" />
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:id="@+id/imageView"
+        android:layout_height="180dp"
+        android:background="@drawable/dummyf"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="39dp"
+        android:layout_marginEnd="39dp"
+        android:layout_alignTop="@+id/linearLayout" />
 
 </RelativeLayout>

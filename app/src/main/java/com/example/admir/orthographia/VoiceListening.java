@@ -1,37 +1,44 @@
 package com.example.admir.orthographia;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
+import android.text.InputFilter;
 import android.view.MotionEvent;
 import android.view.View;
 import android.util.Log;
-import android.view.inputmethod.InputMethodManager;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Random;
-import android.view.View.OnClickListener;
 
 
 public class VoiceListening extends AppCompatActivity {
 
 
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +47,9 @@ public class VoiceListening extends AppCompatActivity {
         setContentView(R.layout.activity_voice_listening);
 
 
-
-
-
         Bundle bundle = getIntent().getExtras();
         final String answerNumber;
-        final String answer = "nai";
+        //final String answer = "nai";
         final Button easyButton = (Button) findViewById(R.id.easy_btn);
         final Button mediumButton = (Button) findViewById(R.id.medium_btn);
         final Button hardButton = (Button) findViewById(R.id.hard_btn);
@@ -53,6 +57,11 @@ public class VoiceListening extends AppCompatActivity {
         final Button solveButton = (Button) findViewById(R.id.solve_btn);
         final Button nextButton = (Button) findViewById(R.id.next_btn);
         final Button explainButton = (Button) findViewById(R.id.explain_btn);
+        ActionBar bar = getActionBar();
+
+
+//for image
+     //  bar.setBackgroundDrawable(getResources().getDrawable(R.drawable.bar));
 
         if (bundle != null) {
             answerNumber = bundle.getString("key");
@@ -62,13 +71,13 @@ public class VoiceListening extends AppCompatActivity {
         }
 
 
-
-        try{
-final TextView textView= (TextView) findViewById(R.id.textView2);
-        textView.setText(findWordByNumber(answerNumber));
-        }catch (IOException e){
+        try {
+            final TextView textView = (TextView) findViewById(R.id.textView2);
+            textView.setText(findWordByNumber(answerNumber));
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        editText.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
 
 
 /*
@@ -88,47 +97,102 @@ String language_code="el";
 
 
 */
+     /*   btnBack.setOnClickListener(new OnClickListener(){
+
+            private void onClick(){
+                Intent intent = new Intent(VoiceListening.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+
+*/
 
 
+        playMedia(getVideoAccordingToAnswerNumber(answerNumber));
+
+        changeDifficulty(easyButton, mediumButton, hardButton);
 
 
-
-        playMedia();
-
-        changeDifficulty();
+        setDifficultyForTheNewLevel(answerNumber, easyButton, mediumButton, hardButton);
 
 
-         setDifficultyForTheNewLevel(answerNumber,easyButton,mediumButton,hardButton);
+        checkIfTheAnswerIsCorrect(answerNumber, editText);
 
-
-        checkIfTheAnswerIsCorrect(answerNumber,editText);
-
-        getSolution(solveButton,editText,answerNumber);
+        getSolution(solveButton, editText, answerNumber);
 
         goToNextWord(nextButton);
 
         findWordsMeaning(explainButton);
 
-        try{
-            Log.i("GGGGGGGGGGGGG", "fffffffffff" );
-            Log.d("GGGGGGGGGGGGG", findWordByNumber(answerNumber) );
-        }catch (IOException e){
+        try {
+            Log.i("GGGGGGGGGGGGG", "fffffffffff");
+            Log.d("GGGGGGGGGGGGG", findWordByNumber(answerNumber));
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
+    public MediaPlayer getVideoAccordingToAnswerNumber(String answerNumber) {
+        final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.ofelimos);
+        final MediaPlayer mediaPlayer2 = MediaPlayer.create(this, R.raw.mpthreetest);
+        switch (answerNumber) {
 
-    public void findWordsMeaning(Button explainButton){
+            case "1":
+                return mediaPlayer2;
+            case "2":
+                return mediaPlayer;
+            case "3":
+                return mediaPlayer2;
+            case "4":
+                return mediaPlayer;
+            case "5":
+                return mediaPlayer2;
+            case "6":
+                return mediaPlayer;
+            case "7":
+                return mediaPlayer2;
+            case "8":
+                return mediaPlayer;
+            case "9":
+                return mediaPlayer2;
+            case "10":
+                return mediaPlayer;
+            case "11":
+                return mediaPlayer2;
+            case "12":
+                return mediaPlayer;
+            case "13":
+                return mediaPlayer2;
+            case "14":
+                return mediaPlayer;
+            default:
+                return mediaPlayer2;
+        }
+    }
+
+    public void findWordsMeaning(Button explainButton) {
 
         explainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-
-                Uri uri = Uri.parse("http://www.google.com"); // missing 'http://' will cause crashed
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
+                Toast.makeText(getBaseContext(), "\"κίβδηλος -η -ο\n" +
+                        "\n" +
+                        "   1. (για νόμισμα, ιδιαίτερα μεταλλικό) που είναι προϊόν παραχάραξης, μη γνήσιος, πλαστός\n" +
+                        "\n" +
+                        "        εντόπισαν κίβδηλο κέρμα των 2 ευρώ\n" +
+                        "\n" +
+                        "    2.(μεταφορικά) για οτιδήποτε παρουσιάζει εξωτερικά μια ψευδή και παραπλανητική εικόνα ενώ στην πραγματικότητα στερείται αξίας\n" +
+                        "\"\n", Toast.LENGTH_SHORT).show();
+                //Uri uri = Uri.parse("http://www.google.com"); // missing 'http://' will cause crashed
+               // Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+               // startActivity(intent);
+                //finish();
 
             }
         });
@@ -137,14 +201,15 @@ String language_code="el";
     }
 
 
-    public void goToNextWord(Button nextButton){
+    public void goToNextWord(Button nextButton) {
         nextButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
 
-                    startVoiceListening(sellectRandomWordAccordingToDifficulty());
+                startVoiceListening(sellectRandomWordAccordingToDifficulty());
+                finish();
 
             }
         });
@@ -152,14 +217,14 @@ String language_code="el";
     }
 
 
-    public void getSolution (final Button solveButton,final EditText editText,final String answerNumber){
+    public void getSolution(final Button solveButton, final EditText editText, final String answerNumber) {
 
         solveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try{
-                editText.setText(findWordByNumber(answerNumber));
-                }catch (IOException e){
+                try {
+                    editText.setText(findWordByNumber(answerNumber));
+                } catch (IOException e) {
                     throw new RuntimeException(e);
 
                 }
@@ -169,53 +234,51 @@ String language_code="el";
     }
 
 
+    public void setDifficultyForTheNewLevel(String aswerNumber, Button easyButton, Button mediumButton, Button hardButton) {
+        ArrayList<String> easy = new ArrayList<String>();
+        ArrayList<String> medium = new ArrayList<String>();
+        ArrayList<String> hard = new ArrayList<String>();
 
-public void setDifficultyForTheNewLevel(String aswerNumber,Button easyButton,Button mediumButton,Button hardButton){
-    ArrayList<String> easy = new ArrayList<String>();
-    ArrayList<String> medium = new ArrayList<String>();
-    ArrayList<String> hard = new ArrayList<String>();
+        for (int i = 0; i <= 224; i++) {
+            easy.add(String.valueOf(i));
+            medium.add(String.valueOf(i + 224));
+            hard.add(String.valueOf(i + 357));
 
-    for(int i=1;i<=5;i++){
-        easy.add(String.valueOf(i));
-        medium.add(String.valueOf(i+5));
-        hard.add(String.valueOf(i+10));
+        }
+        if (hard.contains(aswerNumber)) {
+            hardButton.setPressed(true);
+
+        } else if (medium.contains(aswerNumber)) {
+            mediumButton.setPressed(true);
+
+        } else {
+            easyButton.setPressed(true);
+
+        }
 
     }
-if(hard.contains(aswerNumber)){
-    hardButton.setPressed(true);
-}else if(medium.contains(aswerNumber)){
-    mediumButton.setPressed(true);
-}else {
-    easyButton.setPressed(true);
-}
 
-}
-
-    public String sellectRandomWordAccordingToDifficulty(){
+    public String sellectRandomWordAccordingToDifficulty() {
         final Button easyButton = (Button) findViewById(R.id.easy_btn);
         final Button mediumButton = (Button) findViewById(R.id.medium_btn);
         final Button hardButton = (Button) findViewById(R.id.hard_btn);
         Random random = new Random();
         String answerNumber;
 
-        if(hardButton.isPressed()){
-            answerNumber=String.valueOf(random.nextInt(16 - 11) + 11);
-        }
-else if(mediumButton.isPressed()){
-            answerNumber=String.valueOf(random.nextInt(11 - 6) + 6);
-        }else{
-            answerNumber=String.valueOf(random.nextInt(6 - 1) + 1);
+        if (hardButton.isPressed()) {
+            answerNumber = String.valueOf(random.nextInt(428 - 357) + 357);
+        } else if (mediumButton.isPressed()) {
+            answerNumber = String.valueOf(random.nextInt(357 - 225) + 225);
+        } else {
+            answerNumber = String.valueOf(random.nextInt(225 - 0) + 0);
         }
 
         return answerNumber;
     }
 
 
+    public void changeDifficulty(final Button easyButton, final Button mediumButton, final Button hardButton) {
 
-    public void changeDifficulty() {
-        final Button easyButton = (Button) findViewById(R.id.easy_btn);
-        final Button mediumButton = (Button) findViewById(R.id.medium_btn);
-        final Button hardButton = (Button) findViewById(R.id.hard_btn);
 
         easyButton.setOnTouchListener(new View.OnTouchListener() {
 
@@ -225,6 +288,7 @@ else if(mediumButton.isPressed()){
                 mediumButton.setPressed(false);
                 hardButton.setPressed(false);
                 startVoiceListening(sellectRandomWordAccordingToDifficulty());
+                finish();
                 return true;
             }
         });
@@ -236,6 +300,7 @@ else if(mediumButton.isPressed()){
                 easyButton.setPressed(false);
                 hardButton.setPressed(false);
                 startVoiceListening(sellectRandomWordAccordingToDifficulty());
+                finish();
                 return true;
             }
         });
@@ -248,6 +313,7 @@ else if(mediumButton.isPressed()){
                 mediumButton.setPressed(false);
                 easyButton.setPressed(false);
                 startVoiceListening(sellectRandomWordAccordingToDifficulty());
+                finish();
                 return true;
             }
         });
@@ -255,9 +321,10 @@ else if(mediumButton.isPressed()){
     }
 
 
-    public void playMedia() {
+    public void playMedia(final MediaPlayer mediaPlayer) {
         Button playButton = (Button) findViewById(R.id.play_btn);
-        final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.ofelimos);
+
+        //final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.ofelimos);
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -268,18 +335,26 @@ else if(mediumButton.isPressed()){
 
     }
 
-    public void checkIfTheAnswerIsCorrect(final String answerNumber,final EditText editText) {
+    public void checkIfTheAnswerIsCorrect(final String answerNumber, final EditText editText) {
         Button checkIfCorrect = (Button) findViewById(R.id.check_if_correct);
 
-
+        final MediaPlayer mediaPlayerRight = MediaPlayer.create(this, R.raw.correct);
+        final MediaPlayer mediaPlayerFalse = MediaPlayer.create(this, R.raw.correct);
         checkIfCorrect.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                try {
-                    if (findWordByNumber( answerNumber).equals(editText.getText().toString())) {
 
+                try {
+                    if (findWordByNumber(answerNumber).equals(editText.getText().toString())) {
+
+                        mediaPlayerRight.start();
                         Toast.makeText(getBaseContext(), "ΣΩΣΤΑ!!!!", Toast.LENGTH_SHORT).show();
                         startVoiceListening(sellectRandomWordAccordingToDifficulty());
+                        finish();
+
+                    }else{
+                        mediaPlayerFalse.start();
                     }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -291,8 +366,8 @@ else if(mediumButton.isPressed()){
     }
 
 
-    public String findWordByNumber( String answerNumber) throws IOException {
-        String answer="smthng";
+    public String findWordByNumber(String answerNumber) throws IOException {
+        String answer = "smthng";
         Context context = getApplicationContext();
         InputStream inputStream = context.getResources().openRawResource(R.raw.words);
         InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
@@ -315,10 +390,52 @@ else if(mediumButton.isPressed()){
         Bundle bundle = new Bundle();
         bundle.putString("key", wordNumber);
         intent.putExtras(bundle);
+       intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
+       // getWindow().setWindowAnimations(0);
         startActivity(intent);
-        finish();
+
+       finish();
+       // finish();
+      //  overridePendingTransition( 0, 0);
+      //  startActivity(getIntent());
+       // overridePendingTransition( 0, 0);
 
     }
 
 
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("VoiceListening Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
+    }
 }
