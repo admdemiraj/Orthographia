@@ -9,12 +9,18 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputFilter;
+import android.text.Layout;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +36,12 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static android.R.attr.id;
+import static android.R.attr.layout;
+import static android.R.string.cancel;
+import static com.example.admir.orthographia.R.layout.activity_voice_listening;
+import static com.example.admir.orthographia.R.layout.pop_up_layout;
+import android.view.ViewGroup.LayoutParams;
 
 public class VoiceListening extends AppCompatActivity {
 
@@ -58,6 +70,8 @@ public class VoiceListening extends AppCompatActivity {
         final Button nextButton = (Button) findViewById(R.id.next_btn);
         final Button explainButton = (Button) findViewById(R.id.explain_btn);
         ActionBar bar = getActionBar();
+
+
 
 
 //for image
@@ -122,12 +136,24 @@ String language_code="el";
         getSolution(solveButton, editText, answerNumber);
 
         goToNextWord(nextButton);
+      /*  try {
+            for(int i=0;i<findDedinitionByNumber("0").size();i++){
+
+                definition.setText(findDedinitionByNumber("0").get(0));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+*/
 
         findWordsMeaning(explainButton);
 
         try {
             Log.i("GGGGGGGGGGGGG", "fffffffffff");
             Log.d("GGGGGGGGGGGGG", findWordByNumber(answerNumber));
+            for(int i=0;i<findDedinitionByNumber("0").size();i++){
+            Log.d("OOOOOOOOOOO", findDedinitionByNumber("0").get(i).toString());
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -140,6 +166,8 @@ String language_code="el";
     public MediaPlayer getVideoAccordingToAnswerNumber(String answerNumber) {
         final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.ofelimos);
         final MediaPlayer mediaPlayer2 = MediaPlayer.create(this, R.raw.mpthreetest);
+        final MediaPlayer mediaPlayer3 = MediaPlayer.create(this, R.raw.phgh);
+
         switch (answerNumber) {
 
             case "1":
@@ -171,17 +199,72 @@ String language_code="el";
             case "14":
                 return mediaPlayer;
             default:
-                return mediaPlayer2;
+                return mediaPlayer3;
         }
     }
+    private void initiatePopupWindow() throws IOException {
+
+           final PopupWindow pw;
+
+
+
+            //We need to get the instance of the LayoutInflater, use the context of this activity
+            LayoutInflater inflater = (LayoutInflater) VoiceListening.this
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            //Inflate the view from a predefined XML layout
+            View layout = inflater.inflate(R.layout.pop_up_layout,
+                    (ViewGroup) findViewById(R.id.pop_up_element));
+            // create a 300px width and 470px height PopupWindow
+            pw = new PopupWindow(layout, 1100, 550, true);
+
+        ((TextView)pw.getContentView().findViewById(R.id.definition)).setText("hello there");
+        StringBuilder string = new StringBuilder();
+        for(int i=0;i<findDedinitionByNumber("5").size();i++){
+string.append(findDedinitionByNumber("5").get(i)+"\n");
+
+           // ((TextView)pw.getContentView().findViewById(R.id.definition)).setText(findDedinitionByNumber("0").get(i));
+        }
+        ((TextView)pw.getContentView().findViewById(R.id.definition)).setText(string);
+       // TextView definition=(TextView) findViewById(R.id.definition);
+       // definition.setText("kk");
+            // display the popup in the center
+            pw.showAtLocation(layout, Gravity.CENTER, 0, 0);
+
+            //TextView mResultText = (TextView) layout.findViewById(R.id.server_status_text);
+            Button cancelButton = (Button) layout.findViewById(R.id.cancel_btn);
+            //cancelButton.setOnClickListener(new View.OnClickListener()){}
+            cancelButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    pw.dismiss();
+
+                }
+            });
+                }
+
+
+
 
     public void findWordsMeaning(Button explainButton) {
+
+
 
         explainButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                try {
+                    initiatePopupWindow();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-                Toast.makeText(getBaseContext(), "\"κίβδηλος -η -ο\n" +
+                //Toast.makeText(getBaseContext(),"0",Toast.LENGTH_LONG).show();
+
+
+                //popupWindow.showAtLocation(mainLayout, Gravity.BOTTOM, 10, 10);
+              //  popupWindow.update(50, 50, 320, 90);
+
+               /* Toast.makeText(getBaseContext(), "\"κίβδηλος -η -ο\n" +
                         "\n" +
                         "   1. (για νόμισμα, ιδιαίτερα μεταλλικό) που είναι προϊόν παραχάραξης, μη γνήσιος, πλαστός\n" +
                         "\n" +
@@ -189,6 +272,8 @@ String language_code="el";
                         "\n" +
                         "    2.(μεταφορικά) για οτιδήποτε παρουσιάζει εξωτερικά μια ψευδή και παραπλανητική εικόνα ενώ στην πραγματικότητα στερείται αξίας\n" +
                         "\"\n", Toast.LENGTH_SHORT).show();
+
+                */
                 //Uri uri = Uri.parse("http://www.google.com"); // missing 'http://' will cause crashed
                // Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                // startActivity(intent);
@@ -364,7 +449,28 @@ String language_code="el";
         });
 
     }
+    public ArrayList<String> findDedinitionByNumber(String answerNumber) throws IOException {
 
+        ArrayList<String> answerDefinition = new ArrayList<String>();
+
+        Context context = getApplicationContext();
+        InputStream inputStream = context.getResources().openRawResource(R.raw.definitions);
+        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+        StringBuilder string = new StringBuilder();
+        while (bufferedReader.readLine() != null) {
+            if (bufferedReader.readLine().equals(answerNumber)) {
+               do {
+                   answerDefinition.add(bufferedReader.readLine());
+
+
+               }while(!answerDefinition.contains("#"));
+
+            }
+        }
+
+        return answerDefinition;
+    }
 
     public String findWordByNumber(String answerNumber) throws IOException {
         String answer = "smthng";
