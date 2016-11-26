@@ -30,28 +30,29 @@ public class MainActivity extends AppCompatActivity {
 
         System.out.println("OOOOOOOOOOOOOOOOOOOOOOOO"+locale.getCountry()+locale.getDisplayLanguage());
 
-        Button button=(Button) findViewById(R.id.button7);
+
+
+        Button button=(Button) findViewById(R.id.play_btn);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                   startIntroduction();
+                startGameModeActivity();
 
 
 
             }
         });
-
-
     }
 
     /** Called when the user clicks the Send button */
-    public void startVoiceActivity(View view) {
-        Intent intent = new Intent(this, VoiceListening.class);
+
+
+    public void startGameModeActivity() {
+        Intent intent = new Intent(this, GameModeActvity.class);
         startActivity(intent);
 
     }
-
     public void startIntroduction() {
         Intent intent = new Intent(this, Introduction.class);
         startActivity(intent);

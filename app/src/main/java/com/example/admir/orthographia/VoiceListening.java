@@ -1,6 +1,6 @@
 package com.example.admir.orthographia;
 
-import android.app.ActionBar;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -23,7 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.support.v7.app.ActionBar;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
@@ -36,12 +36,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static android.R.attr.id;
-import static android.R.attr.layout;
-import static android.R.string.cancel;
-import static com.example.admir.orthographia.R.layout.activity_voice_listening;
-import static com.example.admir.orthographia.R.layout.pop_up_layout;
-import android.view.ViewGroup.LayoutParams;
+
 
 public class VoiceListening extends AppCompatActivity {
 
@@ -55,7 +50,7 @@ public class VoiceListening extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        //getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_voice_listening);
 
 
@@ -69,13 +64,12 @@ public class VoiceListening extends AppCompatActivity {
         final Button solveButton = (Button) findViewById(R.id.solve_btn);
         final Button nextButton = (Button) findViewById(R.id.next_btn);
         final Button explainButton = (Button) findViewById(R.id.explain_btn);
-        ActionBar bar = getActionBar();
+
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+
+        getSupportActionBar().setCustomView(R.layout.actionbar_layout);
 
 
-
-
-//for image
-     //  bar.setBackgroundDrawable(getResources().getDrawable(R.drawable.bar));
 
         if (bundle != null) {
             answerNumber = bundle.getString("key");
@@ -94,33 +88,7 @@ public class VoiceListening extends AppCompatActivity {
         editText.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
 
 
-/*
 
-        Resources res =this.getResources();
-// Change locale settings in the app.
-String language_code="el";
-        DisplayMetrics dm = res.getDisplayMetrics();
-
-        android.content.res.Configuration conf = res.getConfiguration();
-        System.out.println("Defaulffffffffffffffffffffft language name (default): " +
-               conf.locale.getDisplayLanguage());
-       conf.locale = new Locale(language_code.toLowerCase());
-        res.updateConfiguration(conf, dm);
-        System.out.println("Defaulttttttt language name (default): " +
-                conf.locale.getDisplayLanguage());
-
-
-*/
-     /*   btnBack.setOnClickListener(new OnClickListener(){
-
-            private void onClick(){
-                Intent intent = new Intent(VoiceListening.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }
-        });
-
-*/
 
 
         playMedia(getVideoAccordingToAnswerNumber(answerNumber));
@@ -136,27 +104,11 @@ String language_code="el";
         getSolution(solveButton, editText, answerNumber);
 
         goToNextWord(nextButton);
-      /*  try {
-            for(int i=0;i<findDedinitionByNumber("0").size();i++){
 
-                definition.setText(findDedinitionByNumber("0").get(0));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-*/
 
-        findWordsMeaning(explainButton);
+        findWordsMeaning(explainButton,"25");
 
-        try {
-            Log.i("GGGGGGGGGGGGG", "fffffffffff");
-            Log.d("GGGGGGGGGGGGG", findWordByNumber(answerNumber));
-            for(int i=0;i<findDedinitionByNumber("0").size();i++){
-            Log.d("OOOOOOOOOOO", findDedinitionByNumber("0").get(i).toString());
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -202,7 +154,7 @@ String language_code="el";
                 return mediaPlayer3;
         }
     }
-    private void initiatePopupWindow() throws IOException {
+    private void initiatePopupWindow(String answerNumber) throws IOException {
 
            final PopupWindow pw;
 
@@ -216,23 +168,10 @@ String language_code="el";
                     (ViewGroup) findViewById(R.id.pop_up_element));
             // create a 300px width and 470px height PopupWindow
             pw = new PopupWindow(layout, 1100, 550, true);
-
-        ((TextView)pw.getContentView().findViewById(R.id.definition)).setText("hello there");
         StringBuilder string = new StringBuilder();
-        for(int i=0;i<findDedinitionByNumber("5").size();i++){
-string.append(findDedinitionByNumber("5").get(i)+"\n");
-
-           // ((TextView)pw.getContentView().findViewById(R.id.definition)).setText(findDedinitionByNumber("0").get(i));
-        }
-        ((TextView)pw.getContentView().findViewById(R.id.definition)).setText(string);
-       // TextView definition=(TextView) findViewById(R.id.definition);
-       // definition.setText("kk");
-            // display the popup in the center
+        ((TextView)pw.getContentView().findViewById(R.id.definition)).setText(findDedinitionByNumber(answerNumber));
             pw.showAtLocation(layout, Gravity.CENTER, 0, 0);
-
-            //TextView mResultText = (TextView) layout.findViewById(R.id.server_status_text);
             Button cancelButton = (Button) layout.findViewById(R.id.cancel_btn);
-            //cancelButton.setOnClickListener(new View.OnClickListener()){}
             cancelButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -245,7 +184,7 @@ string.append(findDedinitionByNumber("5").get(i)+"\n");
 
 
 
-    public void findWordsMeaning(Button explainButton) {
+    public void findWordsMeaning(Button explainButton, final String answerNumber) {
 
 
 
@@ -253,31 +192,12 @@ string.append(findDedinitionByNumber("5").get(i)+"\n");
             @Override
             public void onClick(View v) {
                 try {
-                    initiatePopupWindow();
+                    initiatePopupWindow(answerNumber);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-                //Toast.makeText(getBaseContext(),"0",Toast.LENGTH_LONG).show();
 
-
-                //popupWindow.showAtLocation(mainLayout, Gravity.BOTTOM, 10, 10);
-              //  popupWindow.update(50, 50, 320, 90);
-
-               /* Toast.makeText(getBaseContext(), "\"κίβδηλος -η -ο\n" +
-                        "\n" +
-                        "   1. (για νόμισμα, ιδιαίτερα μεταλλικό) που είναι προϊόν παραχάραξης, μη γνήσιος, πλαστός\n" +
-                        "\n" +
-                        "        εντόπισαν κίβδηλο κέρμα των 2 ευρώ\n" +
-                        "\n" +
-                        "    2.(μεταφορικά) για οτιδήποτε παρουσιάζει εξωτερικά μια ψευδή και παραπλανητική εικόνα ενώ στην πραγματικότητα στερείται αξίας\n" +
-                        "\"\n", Toast.LENGTH_SHORT).show();
-
-                */
-                //Uri uri = Uri.parse("http://www.google.com"); // missing 'http://' will cause crashed
-               // Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-               // startActivity(intent);
-                //finish();
 
             }
         });
@@ -449,28 +369,28 @@ string.append(findDedinitionByNumber("5").get(i)+"\n");
         });
 
     }
-    public ArrayList<String> findDedinitionByNumber(String answerNumber) throws IOException {
+    public String findDedinitionByNumber(String answerNumber) throws IOException {
 
-        ArrayList<String> answerDefinition = new ArrayList<String>();
-
+       // ArrayList<String> answerDefinition = new ArrayList<String>();
+        StringBuilder string = new StringBuilder();
         Context context = getApplicationContext();
         InputStream inputStream = context.getResources().openRawResource(R.raw.definitions);
         InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
         BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-        StringBuilder string = new StringBuilder();
         while (bufferedReader.readLine() != null) {
             if (bufferedReader.readLine().equals(answerNumber)) {
+             //   string.append(""+bufferedReader.readLine().toString()+"\n");
                do {
-                   answerDefinition.add(bufferedReader.readLine());
-
-
-               }while(!answerDefinition.contains("#"));
-
+                       string.append(bufferedReader.readLine().toString()+"\n");
+               }while(!string.toString().contains("#"));
             }
         }
-
-        return answerDefinition;
+        return string.toString().substring(0,string.toString().length()-2);
     }
+
+
+
+
 
     public String findWordByNumber(String answerNumber) throws IOException {
         String answer = "smthng";
