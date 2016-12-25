@@ -38,7 +38,7 @@ import java.util.Random;
 
 
 
-public class VoiceListening extends AppCompatActivity {
+public class MultipleChoice extends AppCompatActivity {
 
 
     /**
@@ -121,7 +121,7 @@ public class VoiceListening extends AppCompatActivity {
     public MediaPlayer getVideoAccordingToAnswerNumber(String answerNumber) {
         final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.a0);
         final MediaPlayer mediaPlayer2 = MediaPlayer.create(this, R.raw.a0);
-       final MediaPlayer mediaPlayer3 = MediaPlayer.create(this, R.raw.a0);
+        final MediaPlayer mediaPlayer3 = MediaPlayer.create(this, R.raw.a0);
 
         switch (answerNumber) {
             case "0":
@@ -160,37 +160,37 @@ public class VoiceListening extends AppCompatActivity {
     }
     private void initiatePopupWindow(String answerNumber) throws IOException {
 
-           final PopupWindow pw;
+        final PopupWindow pw;
 
 
 
-            //We need to get the instance of the LayoutInflater, use the context of this activity
-            LayoutInflater inflater = (LayoutInflater) VoiceListening.this
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            //Inflate the view from a predefined XML layout
-            View layout = inflater.inflate(R.layout.pop_up_layout,
-                    (ViewGroup) findViewById(R.id.pop_up_element));
-            // create a 300px width and 470px height PopupWindow
-            pw = new PopupWindow(layout, 1100, 550, true);
+        //We need to get the instance of the LayoutInflater, use the context of this activity
+        LayoutInflater inflater = (LayoutInflater) MultipleChoice.this
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        //Inflate the view from a predefined XML layout
+        View layout = inflater.inflate(R.layout.pop_up_layout,
+                (ViewGroup) findViewById(R.id.pop_up_element));
+        // create a 300px width and 470px height PopupWindow
+        pw = new PopupWindow(layout, 1100, 550, true);
         StringBuilder string = new StringBuilder();
         //////changed
         StringBuilder string2 = new StringBuilder();
 
-      //  for(int i=0;i<findDedinitionByNumber(answerNumber).size();i++){
+        //  for(int i=0;i<findDedinitionByNumber(answerNumber).size();i++){
         //    string2.append(findDedinitionByNumber(answerNumber).get(i).toString()+"\n");
-       // }
+        // }
 
         ((TextView)pw.getContentView().findViewById(R.id.definition)).setText(findDedinitionByNumber(answerNumber));
-            pw.showAtLocation(layout, Gravity.CENTER, 0, 0);
-            Button cancelButton = (Button) layout.findViewById(R.id.cancel_btn);
-            cancelButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    pw.dismiss();
+        pw.showAtLocation(layout, Gravity.CENTER, 0, 0);
+        Button cancelButton = (Button) layout.findViewById(R.id.cancel_btn);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pw.dismiss();
 
-                }
-            });
-                }
+            }
+        });
+    }
 
 
 
@@ -382,7 +382,7 @@ public class VoiceListening extends AppCompatActivity {
     }
     public String findDedinitionByNumber(String answerNumber) throws IOException {
 
-       ArrayList<String> answerDefinition = new ArrayList<String>();
+        ArrayList<String> answerDefinition = new ArrayList<String>();
         StringBuilder string = new StringBuilder();
         Context context = getApplicationContext();
         InputStream inputStream = context.getResources().openRawResource(R.raw.definitions);
@@ -399,9 +399,9 @@ public class VoiceListening extends AppCompatActivity {
         }
         return answerDefinition;*/
         String line;
-string.append("q"+"s"+"\n");
+        string.append("q"+"s"+"\n");
         while ((line= bufferedReader.readLine() )!= null) {
-           // System.out.println("ANSWERNUMBER: "+answerNumber+"BUFFER "+bufferedReader.readLine().toString());
+            // System.out.println("ANSWERNUMBER: "+answerNumber+"BUFFER "+bufferedReader.readLine().toString());
 
 
             System.out.println("IF LINE :"+line);
@@ -411,7 +411,7 @@ string.append("q"+"s"+"\n");
                 } while (!string.toString().contains("#"));
                 break;
             }
-       }
+        }
         return string.toString().substring(0,string.toString().length()-2);
     }
 
@@ -443,15 +443,15 @@ string.append("q"+"s"+"\n");
         Bundle bundle = new Bundle();
         bundle.putString("key", wordNumber);
         intent.putExtras(bundle);
-       intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
-       // getWindow().setWindowAnimations(0);
+        intent.setFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
+        // getWindow().setWindowAnimations(0);
         startActivity(intent);
 
-       finish();
-       // finish();
-      //  overridePendingTransition( 0, 0);
-      //  startActivity(getIntent());
-       // overridePendingTransition( 0, 0);
+        finish();
+        // finish();
+        //  overridePendingTransition( 0, 0);
+        //  startActivity(getIntent());
+        // overridePendingTransition( 0, 0);
 
     }
 

@@ -14,7 +14,7 @@ public class GamePlayer extends AppCompatActivity {
         setContentView(R.layout.activity_game_player);
 
         Button play_btn = (Button) findViewById(R.id.play_btn);
-        final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.mpthreetest);
+        final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.a0);
 
         play_btn.setOnClickListener(new View.OnClickListener() {
             @Override
