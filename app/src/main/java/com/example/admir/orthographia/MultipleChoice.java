@@ -9,11 +9,9 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.InputFilter;
 
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -34,12 +32,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 
 public class MultipleChoice extends AppCompatActivity {
@@ -55,7 +49,7 @@ public class MultipleChoice extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_game_player);
+        setContentView(R.layout.activity_multiple_choice);
 
 
         Bundle bundle = getIntent().getExtras();
@@ -130,19 +124,19 @@ public class MultipleChoice extends AppCompatActivity {
         TextView titleTxtView = (TextView) v.findViewById(R.id.title_text);
         titleTxtView.setText("ΕΠΙΠΕΔΟ "+level);
 
-        try {
-            final TextView textView = (TextView) findViewById(R.id.textView2);
-            textView.setText(findWordByNumber(answerNumber));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        editText.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
+     //   try {
+          //  final TextView textView = (TextView) findViewById(R.id.textView2);
+         //   textView.setText(findWordByNumber(answerNumber));
+    //    } catch (IOException e) {
+         //   throw new RuntimeException(e);
+      //  }
+      //  editText.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
 
 
 
-        updateResources(points,lives,difficultyCounter);
+     //   updateResources(points,lives,difficultyCounter);
 
-        playMedia(getVideoAccordingToAnswerNumber(answerNumber));
+     //   playMedia(getVideoAccordingToAnswerNumber(answerNumber));
 
 
         //  changeDifficulty(easyButton, mediumButton, hardButton);
@@ -151,18 +145,108 @@ public class MultipleChoice extends AppCompatActivity {
         // setDifficultyForTheNewLevel(answerNumber, easyButton, mediumButton, hardButton);
 
 
-        checkIfTheAnswerIsCorrect(answerNumber, editText);
+     //   checkIfTheAnswerIsCorrect(answerNumber, editText);
+String correctAnswer="hh";
 
-
-
-
-
-
+        try {
+           correctAnswer= initializeButtons(findWords("0"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        checkIfAnsweIsCorrect(correctAnswer);
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
+
+public String initializeButtons(String[] allWords){
+    Button multiple1=(Button) findViewById(R.id.multiple_1_btn);
+    Button multiple2=(Button) findViewById(R.id.multiple_2_btn);
+    Button multiple3=(Button) findViewById(R.id.multiple_3_btn);
+    Button multiple4=(Button) findViewById(R.id.multiple_4_btn);
+
+    ArrayList<String> arrayList=new ArrayList<>();
+    arrayList.add(allWords[0]);
+    arrayList.add(allWords[1]);
+    arrayList.add(allWords[2]);
+    arrayList.add(allWords[3]);
+    Collections.shuffle(arrayList);
+    multiple1.setText(arrayList.get(0));
+    multiple2.setText(arrayList.get(1));
+    multiple3.setText(arrayList.get(2));
+    multiple4.setText(arrayList.get(3));
+    return allWords[0];
+
+}
+
+
+public void checkIfAnsweIsCorrect(final String correctAnswer){
+    final Button multiple1=(Button) findViewById(R.id.multiple_1_btn);
+    Button multiple2=(Button) findViewById(R.id.multiple_2_btn);
+    Button multiple3=(Button) findViewById(R.id.multiple_3_btn);
+    Button multiple4=(Button) findViewById(R.id.multiple_4_btn);
+
+    multiple1.setOnClickListener(new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+        if(multiple1.getText().toString().equals(correctAnswer)){
+            Toast.makeText(getBaseContext(), "ΣΩΣΤΑ!!!!", Toast.LENGTH_SHORT).show();
+            difficultyManager();
+
+            View vr = getSupportActionBar().getCustomView();
+            TextView titleTxtView = (TextView) vr.findViewById(R.id.title_text);
+            String temp=titleTxtView.getText().toString();
+            temp= temp.replaceAll("\\D+","");
+            int level=Integer.parseInt(temp);
+            int numLives=findNumberOfLives();
+            int difficulty=difficultyCounter();
+
+            if(difficultyCounter()==11){
+                startMultipleChoice(nextAnswerNumberAccordingToLevelDifficulty(level,difficulty), updatePoints(pointManager()),numLives,difficulty,level+1);
+                finish();
+            }else {
+                startMultipleChoice(nextAnswerNumberAccordingToLevelDifficulty(level,difficulty), updatePoints(pointManager()),numLives,difficulty,level+1);
+finish();
+            }
+
+        }else {
+            Toast.makeText(getBaseContext(), "ΛΑΘΟΣ!!!!", Toast.LENGTH_SHORT).show();
+            try {
+                lifeManager();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        }
+    });
+
+    multiple2.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+
+        }
+    });
+    multiple3.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+
+        }
+    });
+    multiple4.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+
+        }
+    });
+
+}
+
 
 
     public void lifeManager() throws IOException {
@@ -193,6 +277,7 @@ public class MultipleChoice extends AppCompatActivity {
 
 
     }
+
     public int findNumberOfLives(){
         ImageView imageView= (ImageView) findViewById(R.id.heart_image_view);
         if(imageView.getBackground().getConstantState().toString().equals(getResources().getDrawable(R.drawable.lifeboard).getConstantState().toString())){
@@ -349,46 +434,6 @@ public class MultipleChoice extends AppCompatActivity {
 
 
     }
-    public MediaPlayer getVideoAccordingToAnswerNumber(String answerNumber) {
-        final MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.a0);
-        final MediaPlayer mediaPlayer2 = MediaPlayer.create(this, R.raw.a0);
-        final MediaPlayer mediaPlayer3 = MediaPlayer.create(this, R.raw.a0);
-
-        switch (answerNumber) {
-            case "0":
-                return mediaPlayer2;
-            case "1":
-                return mediaPlayer2;
-            case "2":
-                return mediaPlayer;
-            case "3":
-                return mediaPlayer2;
-            case "4":
-                return mediaPlayer;
-            case "5":
-                return mediaPlayer2;
-            case "6":
-                return mediaPlayer;
-            case "7":
-                return mediaPlayer2;
-            case "8":
-                return mediaPlayer;
-            case "9":
-                return mediaPlayer2;
-            case "10":
-                return mediaPlayer;
-            case "11":
-                return mediaPlayer2;
-            case "12":
-                return mediaPlayer;
-            case "13":
-                return mediaPlayer2;
-            case "14":
-                return mediaPlayer;
-            default:
-                return mediaPlayer3;
-        }
-    }
 
 
     private void initiatePopupWindow() throws IOException {
@@ -422,7 +467,7 @@ public class MultipleChoice extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 pw.dismiss();
-                StartGamePlayer("0","0",5,1,1);
+                startMultipleChoice("0","0",5,1,1);
 
             }
         });
@@ -482,10 +527,10 @@ public class MultipleChoice extends AppCompatActivity {
                         int difficulty=difficultyCounter();
 
                         if(difficultyCounter()==11){
-                            StartGamePlayer(nextAnswerNumberAccordingToLevelDifficulty(level,difficulty), updatePoints(pointManager()),numLives,difficulty,level+1);
+                            startMultipleChoice(nextAnswerNumberAccordingToLevelDifficulty(level,difficulty), updatePoints(pointManager()),numLives,difficulty,level+1);
                             finish();
                         }else{
-                            StartGamePlayer(nextAnswerNumberAccordingToLevelDifficulty(level,difficulty), updatePoints(pointManager()),numLives,difficulty,level);
+                            startMultipleChoice(nextAnswerNumberAccordingToLevelDifficulty(level,difficulty), updatePoints(pointManager()),numLives,difficulty,level);
                             finish();
 
                         }
@@ -640,7 +685,31 @@ public class MultipleChoice extends AppCompatActivity {
     }
 
 
+    public String[] findWords(String answerNumber) throws IOException {
 
+        ArrayList<String> allWordsSeperated = new ArrayList<String>();
+        //StringBuilder string = new StringBuilder();
+        Context context = getApplicationContext();
+        InputStream inputStream = context.getResources().openRawResource(R.raw.words_wrong);
+        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+        String line;
+        String allWords="noyhing,noting2";
+       // string.append("q"+"s"+"\n");
+        while ((line= bufferedReader.readLine() )!= null) {
+            // System.out.println("ANSWERNUMBER: "+answerNumber+"BUFFER "+bufferedReader.readLine().toString());
+
+
+            System.out.println("IF LINE :"+line);
+            if (line.equals(answerNumber)) {
+               allWords=bufferedReader.readLine();
+            }
+        }
+        String[] split = allWords.split(",");
+        System.out.println("all splits :"+split[0]+" "+split[1]+split[2]+split[3]);
+        return split;
+    }
 
 
     public String findDedinitionByNumber(String answerNumber) throws IOException {
@@ -702,8 +771,8 @@ public class MultipleChoice extends AppCompatActivity {
 
 
 
-    public void StartGamePlayer(String wordNumber,String points,int lives,int difficultyCounter,int level) {
-        Intent intent = new Intent(this, GamePlayer.class);
+    public void startMultipleChoice(String wordNumber,String points,int lives,int difficultyCounter,int level) {
+        Intent intent = new Intent(this, MultipleChoice.class);
         Bundle bundle = new Bundle();
         bundle.putString("key", wordNumber);
         bundle.putString("points", points);

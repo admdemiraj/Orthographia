@@ -14,6 +14,7 @@ public class GameModeActvity extends AppCompatActivity {
         setContentView(R.layout.activity_game_mode_actvity);
         Button button=(Button) findViewById(R.id.practice_btn);
         Button button2=(Button) findViewById(R.id.arcade_btn);
+        Button button3=(Button) findViewById(R.id.multiple_choice_btn);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,6 +36,17 @@ public class GameModeActvity extends AppCompatActivity {
 
             }
         });
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startMultipleChoice();
+
+
+
+            }
+        });
+
 
     }
 
@@ -45,6 +57,11 @@ public class GameModeActvity extends AppCompatActivity {
     }
     public void startGamePlayer() {
         Intent intent = new Intent(this, GamePlayer.class);
+        startActivity(intent);
+
+    }
+    public void startMultipleChoice() {
+        Intent intent = new Intent(this, MultipleChoice.class);
         startActivity(intent);
 
     }

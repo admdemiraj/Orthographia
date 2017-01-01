@@ -12,57 +12,6 @@
     android:gravity="center"
     android:background="@drawable/backround3">
 
-    <Button
-        android:id="@+id/play_btn"
-        android:textColor="#FFFFFF"
-        android:textSize="30sp"
-        android:layout_width="100dp"
-        android:layout_height="80dp"
-        android:shadowColor="#1B21CF"
-        android:shadowDx="0"
-        android:shadowDy="0"
-        android:shadowRadius="5"
-
-
-
-        android:background="@drawable/play_button_backround"
-        android:layout_marginLeft="224dp"
-        android:layout_marginStart="224dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:id="@+id/editText"
-        android:layout_marginTop="90dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:contextClickable="true"
-        android:editable="true"
-        android:lines="1"
-        android:shadowColor="@android:color/background_light"
-        android:imeOptions="flagNoExtractUi"
-
-        android:singleLine="true"
-        android:cursorVisible="true"
-        android:textCursorDrawable="?android:attr/textCheckMarkInverse"
-        android:maxLength="16"
-        tools:textStyle="bold"
-        android:allowUndo="true"
-        android:autoText="true"
-        android:ems="10"
-        android:typeface="sans"
-        android:textSize="24sp"
-        android:textAlignment="center"
-        android:textStyle="normal|bold|italic"
-        android:textColor="@android:color/background_light"
-        android:textColorHint="@color/common_google_signin_btn_text_dark_default"
-        android:textColorHighlight="@color/common_google_signin_btn_text_dark_default"
-        android:textColorLink="?attr/colorBackgroundFloating" />
-
     <TextView
         android:text="TextView"
         android:layout_width="wrap_content"
@@ -104,17 +53,6 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/check_if_correct"
-        android:elevation="0dp"
-        android:background="@drawable/elenxos_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/play_btn"
-        android:layout_alignEnd="@+id/play_btn" />
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
@@ -131,6 +69,66 @@
             android:background="@drawable/difficulty1" />
 
     </LinearLayout>
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/kk" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <Button
+                android:text="Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/multiple_1_btn"
+                android:textAllCaps="false"/>
+
+            <Button
+                android:text="Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/multiple_2_btn"
+                android:textAllCaps="false"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <Button
+                android:text="Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/multiple_3_btn"
+                android:textAllCaps="false"/>
+
+            <Button
+                android:text="Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/multiple_4_btn"
+                android:textAllCaps="false"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </TableLayout>
 
 
 </RelativeLayout>

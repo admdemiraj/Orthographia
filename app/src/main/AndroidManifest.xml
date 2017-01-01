@@ -64,7 +64,12 @@
                     android:scheme="http" />
             </intent-filter>
         </activity>
-        <activity android:name=".MultipleChoice"></activity>
+        <activity android:name=".MultipleChoice"
+            android:imeOptions="flagNoExtractUi"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
+            />>
     </application>
 
 </manifest>
