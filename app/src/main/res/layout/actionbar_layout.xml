@@ -26,8 +26,7 @@
         android:textAllCaps="true"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#fff"
-        android:textStyle="bold"
-        android:text="5600" />
+        android:textStyle="bold" />
 
     <ImageView
         android:id="@+id/imageView1"
@@ -35,16 +34,15 @@
         android:layout_height="35dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="8dp"
-         />
+
+        android:background="@drawable/home" />
 
     <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/home_image_btn"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="8dp"
-        android:background="@drawable/book" />
+        android:background="@drawable/home_image_btn" />
 
 </RelativeLayout>

@@ -13,6 +13,8 @@ public class GameModeActvity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_mode_actvity);
         Button button=(Button) findViewById(R.id.practice_btn);
+        Button button2=(Button) findViewById(R.id.arcade_btn);
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -23,10 +25,26 @@ public class GameModeActvity extends AppCompatActivity {
 
             }
         });
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startGamePlayer();
+
+
+
+            }
+        });
+
     }
 
     public void startVoiceActivity() {
         Intent intent = new Intent(this, VoiceListening.class);
+        startActivity(intent);
+
+    }
+    public void startGamePlayer() {
+        Intent intent = new Intent(this, GamePlayer.class);
         startActivity(intent);
 
     }

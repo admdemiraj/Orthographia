@@ -9,7 +9,7 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputFilter;
-import android.text.Layout;
+
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -19,7 +19,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +35,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Random;
+
 
 
 
@@ -64,14 +65,35 @@ public class VoiceListening extends AppCompatActivity {
         final Button solveButton = (Button) findViewById(R.id.solve_btn);
         final Button nextButton = (Button) findViewById(R.id.next_btn);
         final Button explainButton = (Button) findViewById(R.id.explain_btn);
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+
+
+      getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 
         getSupportActionBar().setCustomView(R.layout.actionbar_layout);
 
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setDisplayUseLogoEnabled(false);
-        getSupportActionBar().setDisplayShowHomeEnabled(false);
+
+
+
+
+
+
+      //  getSupportActionBar().setDisplayShowTitleEnabled(false);
+      //  getSupportActionBar().setDisplayShowCustomEnabled(true);
+      //  getSupportActionBar().setDisplayUseLogoEnabled(false);
+      //  getSupportActionBar().setDisplayShowHomeEnabled(false);
+
+
+        //ActionBar mActionBar = getActionBar();
+//        mActionBar.setDisplayShowHomeEnabled(false);
+  //  mActionBar.setDisplayShowTitleEnabled(true);
+       // LayoutInflater mInflater = LayoutInflater.from(this);
+
+        //View mCustomView = mInflater.inflate(R.layout.pop_up_layout, null);
+
+
+
+
+
 
         if (bundle != null) {
             answerNumber = bundle.getString("key");
