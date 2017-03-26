@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="word_btn_1" type="id"/>
+    <item name="word_btn_2" type="id"/>
+    <item name="word_btn_3" type="id"/>
+    <item name="word_btn_4" type="id"/>
+    <item name="word_btn_5" type="id"/>
+    <item name="word_btn_6" type="id"/>
+    <item name="word_btn_7" type="id"/>
+    <item name="word_btn_8" type="id"/>
+    <item name="word_btn_9" type="id"/>
+    <item name="word_btn_10" type="id"/>
+    <item name="word_btn_11" type="id"/>
+    <item name="word_btn_12" type="id"/>
+    <item name="word_btn_13" type="id"/>
+    <item name="word_btn_14" type="id"/>
+    <item name="word_btn_15" type="id"/>
+    <item name="word_btn_16" type="id"/>
+    <item name="word_btn_17" type="id"/>
+    <item name="word_btn_18" type="id"/>
+    <item name="alphabet_btn_1" type="id"/>
+    <item name="alphabet_btn_2" type="id"/>
+    <item name="alphabet_btn_3" type="id"/>
+    <item name="alphabet_btn_4" type="id"/>
+    <item name="alphabet_btn_5" type="id"/>
+    <item name="alphabet_btn_6" type="id"/>
+    <item name="alphabet_btn_7" type="id"/>
+    <item name="alphabet_btn_8" type="id"/>
+    <item name="alphabet_btn_9" type="id"/>
+    <item name="alphabet_btn_10" type="id"/>
+    <item name="alphabet_btn_11" type="id"/>
+    <item name="alphabet_btn_12" type="id"/>
+    <item name="alphabet_btn_13" type="id"/>
+    <item name="alphabet_btn_14" type="id"/>
+
+</resources>

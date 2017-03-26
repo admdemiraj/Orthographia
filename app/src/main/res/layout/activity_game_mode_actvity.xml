@@ -37,7 +37,7 @@
         <Button
             android:layout_width="200dp"
             android:layout_height="80dp"
-            android:id="@+id/button3"
+            android:id="@+id/hidden_word_mode_btn"
             android:background="@drawable/hidden_word_mode_btn" />
     </LinearLayout>
 

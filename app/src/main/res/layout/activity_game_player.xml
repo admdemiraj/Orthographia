@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.admir.orthographia.GamePlayer"
     android:gravity="center"
-    android:background="@drawable/backround3">
+    android:background="@drawable/backthree">
 
     <Button
         android:id="@+id/play_btn"
@@ -25,7 +25,7 @@
 
 
 
-        android:background="@drawable/play_button_backround"
+        android:background="@drawable/play_btn_game_player"
         android:layout_marginLeft="224dp"
         android:layout_marginStart="224dp"
         android:layout_alignParentTop="true"

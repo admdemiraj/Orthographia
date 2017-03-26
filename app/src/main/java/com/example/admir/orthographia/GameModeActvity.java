@@ -15,6 +15,7 @@ public class GameModeActvity extends AppCompatActivity {
         Button button=(Button) findViewById(R.id.practice_btn);
         Button button2=(Button) findViewById(R.id.arcade_btn);
         Button button3=(Button) findViewById(R.id.multiple_choice_btn);
+        Button button4=(Button) findViewById(R.id.hidden_word_mode_btn);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,7 +48,16 @@ public class GameModeActvity extends AppCompatActivity {
             }
         });
 
+        button4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                startKremala();
+
+
+
+            }
+        });
     }
 
     public void startVoiceActivity() {
@@ -62,6 +72,10 @@ public class GameModeActvity extends AppCompatActivity {
     }
     public void startMultipleChoice() {
         Intent intent = new Intent(this, MultipleChoice.class);
+        startActivity(intent);
+
+    }  public void startKremala() {
+        Intent intent = new Intent(this, Kremala.class);
         startActivity(intent);
 
     }

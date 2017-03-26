@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.admir.orthographia.GamePlayer"
     android:gravity="center"
-    android:background="@drawable/backround3">
+    android:background="@drawable/backfive">
 
     <TextView
         android:text="TextView"
@@ -80,11 +80,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
 
-            <TextView
-                android:text="TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/kk" />
         </TableRow>
 
         <TableRow
@@ -93,17 +88,25 @@
 
             <Button
                 android:text="Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
                 android:id="@+id/multiple_1_btn"
-                android:textAllCaps="false"/>
+                android:textAllCaps="false"
+                android:background="@drawable/multiple_choice_btn"
+                android:textStyle="normal|bold"
+                android:textColor="@color/common_google_signin_btn_text_dark_default"
+                android:textSize="18sp" />
 
             <Button
                 android:text="Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
                 android:id="@+id/multiple_2_btn"
-                android:textAllCaps="false"/>
+                android:textAllCaps="false"
+                android:background="@drawable/multiple_choice_btn"
+                android:textStyle="normal|bold"
+                android:textColor="@color/common_google_signin_btn_text_dark_default"
+                android:textSize="18sp"/>
         </TableRow>
 
         <TableRow
@@ -112,23 +115,41 @@
 
             <Button
                 android:text="Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
                 android:id="@+id/multiple_3_btn"
-                android:textAllCaps="false"/>
+                android:textAllCaps="false"
+                android:background="@drawable/multiple_choice_btn"
+                android:textStyle="normal|bold"
+                android:textColor="@color/common_google_signin_btn_text_dark_default"
+                android:textSize="18sp"/>
 
             <Button
                 android:text="Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
                 android:id="@+id/multiple_4_btn"
-                android:textAllCaps="false"/>
+                android:textAllCaps="false"
+                android:background="@drawable/multiple_choice_btn"
+                android:textStyle="normal|bold"
+                android:textColor="@color/common_google_signin_btn_text_dark_default"
+                android:textSize="18sp"/>
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </TableLayout>
+
+    <TextView
+        android:text="Βρές το σωστό.!"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:textSize="30sp"
+        tools:text="Βρές το σωστό."
+        android:textColor="@color/common_google_signin_btn_text_dark_default"/>
 
 
 </RelativeLayout>

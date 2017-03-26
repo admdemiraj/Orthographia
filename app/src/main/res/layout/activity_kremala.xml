@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_kremala"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.admir.orthographia.Kremala"
+    android:background="@drawable/backthree"
+    android:layout_marginBottom="0dp">
+
+    <Button
+        android:id="@+id/check_if_correct_btn"
+        android:elevation="0dp"
+        android:background="@drawable/elenxos_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="-1dp" />
+
+    <TableLayout
+        android:id="@+id/alphabet_table_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/check_if_correct_btn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp" >
+
+    </TableLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+       android:layout_marginTop="60dp"
+        android:id="@+id/letters_linear_layout">
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/dummy_imgview"
+        android:layout_width="76dp"
+        android:layout_height="230dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        app:srcCompat="@drawable/dummyf"
+        android:tag="f"
+        />
+
+</RelativeLayout>
