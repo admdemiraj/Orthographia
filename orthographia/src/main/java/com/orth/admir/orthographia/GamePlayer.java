@@ -12,10 +12,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputFilter;
 
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -111,39 +113,68 @@ public class GamePlayer extends AppCompatActivity {
 
         highScoreTextView.setText("max: "+getHighScore());
 
-      //  try {
-           // final TextView textView = (TextView) findViewById(R.id.textView2);
-          //  textView.setText(findWordByNumber(answerNumber));
-      //  } catch (IOException e) {
-       //     throw new RuntimeException(e);
-      //  }
+            // set tags
+            ImageView heartImageView = (ImageView) findViewById(R.id.heart_image_view);
+            ImageView difImageView = (ImageView) findViewById(R.id.difficulty_image_view);
+            heartImageView.setTag(String.valueOf(lives));
+            difImageView.setTag(String.valueOf(difficultyCounter));
+
+            // trial solve button
+            //final Button solveButton = (Button) findViewById(R.id.solve_btn);
+          //  getSolution(solveButton, editText, answerNumber);
+
         editText.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
         updateResources(points, lives, difficultyCounter);
 
-        playMedia(getVideoAccordingToAnswerNumber(answerNumber));
-        checkIfTheAnswerIsCorrect(answerNumber, editText);
+        MediaPlayer mediaPlayer = getVideoAccordingToAnswerNumber(answerNumber);
+        playMedia(mediaPlayer);
+
+        checkIfTheAnswerIsCorrect(answerNumber, editText,mediaPlayer);
+
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
+////trial get solution
+    public void getSolution(final Button solveButton, final EditText editText, final String answerNumber) {
+        final MediaPlayer lamp = MediaPlayer.create(this, R.raw.lamp);
+        solveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lamp.start();
+                try {
+                    editText.setText(findWordByNumber(answerNumber));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
 
+                }
+            }
+        });
+
+    }
 
     public void lifeManager() throws IOException {
         ImageView imageView = (ImageView) findViewById(R.id.heart_image_view);
-        if (imageView.getBackground().getConstantState().toString().equals(getResources().getDrawable(R.drawable.lifeboard).getConstantState().toString())) {
+
+        if (String.valueOf(imageView.getTag()).equals("5")) {
             imageView.setBackgroundResource(R.drawable.lifeboardb);
+            imageView.setTag("4");
 
-        } else if (imageView.getBackground().getConstantState().toString().equals(getResources().getDrawable(R.drawable.lifeboardb).getConstantState().toString())) {
+        } else if (String.valueOf(imageView.getTag()).equals("4")) {
             imageView.setBackgroundResource(R.drawable.lifeboardc);
+            imageView.setTag("3");
 
-        } else if (imageView.getBackground().getConstantState().toString().equals(getResources().getDrawable(R.drawable.lifeboardc).getConstantState().toString())) {
+        } else if (String.valueOf(imageView.getTag()).equals("3")) {
             imageView.setBackgroundResource(R.drawable.lifeboardd);
+            imageView.setTag("2");
 
-        } else if (imageView.getBackground().getConstantState().toString().equals(getResources().getDrawable(R.drawable.lifeboardd).getConstantState().toString())) {
+        } else if (String.valueOf(imageView.getTag()).equals("2")) {
             imageView.setBackgroundResource(R.drawable.lifeboarde);
+            imageView.setTag("1");
 
-        } else if (imageView.getBackground().getConstantState().toString().equals(getResources().getDrawable(R.drawable.lifeboarde).getConstantState().toString())) {
+        } else if (String.valueOf(imageView.getTag()).equals("1")) {
             imageView.setBackgroundResource(R.drawable.lifeboardf);
+            imageView.setTag("0");
 
         } else {
             initiatePopupWindow();
@@ -154,19 +185,19 @@ public class GamePlayer extends AppCompatActivity {
 
     public int findNumberOfLives() {
         ImageView imageView = (ImageView) findViewById(R.id.heart_image_view);
-        if (imageView.getBackground().getConstantState().toString().equals(getResources().getDrawable(R.drawable.lifeboard).getConstantState().toString())) {
+        if (String.valueOf(imageView.getTag()).equals("5")) {
             return 5;
 
-        } else if (imageView.getBackground().getConstantState().toString().equals(getResources().getDrawable(R.drawable.lifeboardb).getConstantState().toString())) {
+        } else if (String.valueOf(imageView.getTag()).equals("4")) {
             return 4;
 
-        } else if (imageView.getBackground().getConstantState().toString().equals(getResources().getDrawable(R.drawable.lifeboardc).getConstantState().toString())) {
+        } else if (String.valueOf(imageView.getTag()).equals("3")) {
             return 3;
 
-        } else if (imageView.getBackground().getConstantState().toString().equals(getResources().getDrawable(R.drawable.lifeboardd).getConstantState().toString())) {
+        } else if (String.valueOf(imageView.getTag()).equals("2")) {
             return 2;
 
-        } else if (imageView.getBackground().getConstantState().toString().equals(getResources().getDrawable(R.drawable.lifeboarde).getConstantState().toString())) {
+        } else if (String.valueOf(imageView.getTag()).equals("1")) {
             return 1;
 
         } else {
@@ -177,79 +208,88 @@ public class GamePlayer extends AppCompatActivity {
 
     }
 
-    public void setWordToRed(String answerNumber) throws IOException, InterruptedException {
-        EditText editText = (EditText) findViewById(R.id.editText);
-        editText.setText(findWordByNumber(answerNumber).toString());
-        editText.setTextColor(Color.red(1));
-        editText.setTypeface(null, Typeface.BOLD_ITALIC);
-    }
 
     public void difficultyManager() {
         ImageView imageView = (ImageView) findViewById(R.id.difficulty_image_view);
-        if (imageView.getBackground().getConstantState().toString().equals(getResources().getDrawable(R.drawable.difficulty1).getConstantState().toString())) {
+        // System.out.println("image view constant state10:"+getResources().getDrawable(R.drawable.difficulty10).getConstantState().toString());
+        if (String.valueOf(imageView.getTag()).equals("1")) {
             imageView.setBackgroundResource(R.drawable.difficulty2);
+            imageView.setTag("2");
 
-        } else if (imageView.getBackground().getConstantState().toString().equals(getResources().getDrawable(R.drawable.difficulty2).getConstantState().toString())) {
+        } else if (String.valueOf(imageView.getTag()).equals("2")) {
             imageView.setBackgroundResource(R.drawable.difficulty3);
+            imageView.setTag("3");
 
-        } else if (imageView.getBackground().getConstantState().toString().equals(getResources().getDrawable(R.drawable.difficulty3).getConstantState().toString())) {
+        } else if (String.valueOf(imageView.getTag()).equals("3")) {
             imageView.setBackgroundResource(R.drawable.difficulty4);
+            imageView.setTag("4");
 
-        } else if (imageView.getBackground().getConstantState().toString().equals(getResources().getDrawable(R.drawable.difficulty4).getConstantState().toString())) {
+        } else if (String.valueOf(imageView.getTag()).equals("4")) {
             imageView.setBackgroundResource(R.drawable.difficulty5);
+            imageView.setTag("5");
 
-        } else if (imageView.getBackground().getConstantState().toString().equals(getResources().getDrawable(R.drawable.difficulty5).getConstantState().toString())) {
+        } else if (String.valueOf(imageView.getTag()).equals("5")) {
             imageView.setBackgroundResource(R.drawable.difficulty6);
+            imageView.setTag("6");
 
-        } else if (imageView.getBackground().getConstantState().toString().equals(getResources().getDrawable(R.drawable.difficulty6).getConstantState().toString())) {
+        } else if (String.valueOf(imageView.getTag()).equals("6")) {
             imageView.setBackgroundResource(R.drawable.difficulty7);
+            imageView.setTag("7");
 
-        } else if (imageView.getBackground().getConstantState().toString().equals(getResources().getDrawable(R.drawable.difficulty7).getConstantState().toString())) {
+        } else if (String.valueOf(imageView.getTag()).equals("7")){
             imageView.setBackgroundResource(R.drawable.difficulty8);
+            imageView.setTag("8");
 
-        } else if (imageView.getBackground().getConstantState().toString().equals(getResources().getDrawable(R.drawable.difficulty8).getConstantState().toString())) {
+        } else if (String.valueOf(imageView.getTag()).equals("8")) {
             imageView.setBackgroundResource(R.drawable.difficulty9);
+            imageView.setTag("9");
 
-        } else if (imageView.getBackground().getConstantState().toString().equals(getResources().getDrawable(R.drawable.difficulty9).getConstantState().toString())) {
+        } else if (String.valueOf(imageView.getTag()).equals("9")) {
             imageView.setBackgroundResource(R.drawable.difficulty10);
+            imageView.setTag("10");
 
         } else {
             imageView.setBackgroundResource(R.drawable.difficulty1);
+            imageView.setTag("1");
         }
 
 
     }
 
+
+
+
     public int difficultyCounter() {
         ImageView imageView = (ImageView) findViewById(R.id.difficulty_image_view);
-        if (imageView.getBackground().getConstantState().toString().equals(getResources().getDrawable(R.drawable.difficulty1).getConstantState().toString())) {
+        if (String.valueOf(imageView.getTag()).equals("1")) {
             return 11;
+            //return 11;
 
-        } else if (imageView.getBackground().getConstantState().toString().equals(getResources().getDrawable(R.drawable.difficulty2).getConstantState().toString())) {
+        } else if (String.valueOf(imageView.getTag()).equals("2")) {
             return 2;
 
-        } else if (imageView.getBackground().getConstantState().toString().equals(getResources().getDrawable(R.drawable.difficulty3).getConstantState().toString())) {
+        } else if (String.valueOf(imageView.getTag()).equals("3")) {
             return 3;
 
-        } else if (imageView.getBackground().getConstantState().toString().equals(getResources().getDrawable(R.drawable.difficulty4).getConstantState().toString())) {
+        } else if (String.valueOf(imageView.getTag()).equals("4")) {
             return 4;
 
-        } else if (imageView.getBackground().getConstantState().toString().equals(getResources().getDrawable(R.drawable.difficulty5).getConstantState().toString())) {
+        } else if (String.valueOf(imageView.getTag()).equals("5")) {
             return 5;
 
-        } else if (imageView.getBackground().getConstantState().toString().equals(getResources().getDrawable(R.drawable.difficulty6).getConstantState().toString())) {
+        } else if (String.valueOf(imageView.getTag()).equals("6")) {
             return 6;
 
-        } else if (imageView.getBackground().getConstantState().toString().equals(getResources().getDrawable(R.drawable.difficulty7).getConstantState().toString())) {
+        } else if (String.valueOf(imageView.getTag()).equals("7")) {
             return 7;
 
-        } else if (imageView.getBackground().getConstantState().toString().equals(getResources().getDrawable(R.drawable.difficulty8).getConstantState().toString())) {
+        } else if (String.valueOf(imageView.getTag()).equals("8")) {
             return 8;
 
-        } else if (imageView.getBackground().getConstantState().toString().equals(getResources().getDrawable(R.drawable.difficulty9).getConstantState().toString())) {
+        } else if (String.valueOf(imageView.getTag()).equals("9")) {
             return 9;
 
-        } else if (imageView.getBackground().getConstantState().toString().equals(getResources().getDrawable(R.drawable.difficulty10).getConstantState().toString())) {
+        } else if (String.valueOf(imageView.getTag()).equals("10")) {
             return 10;
 
         } else {
@@ -258,11 +298,11 @@ public class GamePlayer extends AppCompatActivity {
 
 
     }
-
     public void setDifficultyAccordingToCounter(int difficultyCounter) {
         ImageView imageView = (ImageView) findViewById(R.id.difficulty_image_view);
         if (difficultyCounter == 1) {
             imageView.setBackgroundResource(R.drawable.difficulty1);
+            imageView.setTag("1");
         } else if (difficultyCounter == 2) {
             imageView.setBackgroundResource(R.drawable.difficulty2);
         } else if (difficultyCounter == 3) {
@@ -283,6 +323,7 @@ public class GamePlayer extends AppCompatActivity {
             imageView.setBackgroundResource(R.drawable.difficulty10);
         } else {
             imageView.setBackgroundResource(R.drawable.difficulty1);
+            imageView.setTag("1");
         }
 
 
@@ -292,14 +333,18 @@ public class GamePlayer extends AppCompatActivity {
     private void initiatePopupWindow() throws IOException {
 
         final PopupWindow pw;
-
-
+        final Button checkIfCorrectButton = (Button) findViewById(R.id.check_if_correct);
+        Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
+        int width = display.getWidth();
+        int height = display.getHeight();
         //We need to get the instance of the LayoutInflater, use the context of this activity
         LayoutInflater inflater = (LayoutInflater) GamePlayer.this
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //Inflate the view from a predefined XML layout
         View layout = inflater.inflate(R.layout.pop_up_layout, (ViewGroup) findViewById(R.id.pop_up_element));
-        pw = new PopupWindow(layout, 1100, 550, true);
+        pw = new PopupWindow(layout, height, width, false);
+        checkIfCorrectButton.setEnabled(false);
+
         TextView textView = (TextView) findViewById(R.id.pointBoard_textView);
         saveHighScore(textView.getText().toString());
         String achievement = checkAchievement(Integer.parseInt(getHighScore()));
@@ -312,6 +357,7 @@ public class GamePlayer extends AppCompatActivity {
         }
         //((TextView) pw.getContentView().findViewById(R.id.definition)).setText("ΤΕΛΟΣ ΠΑΙΧΝΙΔΙΟΥ \n ΠΕΤΥΧΑΤΕ ΣΚΟΡ: " + textView.getText().toString());
         pw.showAtLocation(layout, Gravity.CENTER, 0, 0);
+
         Button cancelButton = (Button) layout.findViewById(R.id.cancel_btn);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -319,6 +365,7 @@ public class GamePlayer extends AppCompatActivity {
                 pw.dismiss();
                 Random random = new Random();
                 String answerNumber = String.valueOf(random.nextInt(225 - 0) + 0);
+                checkIfCorrectButton.setEnabled(true);
                 StartGamePlayer(answerNumber, "0", 5, 1, 1);
 
             }
@@ -328,21 +375,26 @@ public class GamePlayer extends AppCompatActivity {
 
     public void playMedia(final MediaPlayer mediaPlayer) {
         Button playButton = (Button) findViewById(R.id.play_btn);
+
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    mediaPlayer.prepare();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                mediaPlayer.start();
+
+
+                //mediaPlayer.start();
+                onPrepared(mediaPlayer);
+
+
             }
         });
 
+
     }
 
-    public void checkIfTheAnswerIsCorrect(final String answerNumber, final EditText editText) {
+    public void onPrepared(MediaPlayer player) {
+        player.start();
+    }
+    public void checkIfTheAnswerIsCorrect(final String answerNumber, final EditText editText,final MediaPlayer mediaPlayer) {
         Button checkIfCorrect = (Button) findViewById(R.id.check_if_correct);
 
         final MediaPlayer mediaPlayerRight = MediaPlayer.create(this, R.raw.correct);
@@ -369,6 +421,13 @@ public class GamePlayer extends AppCompatActivity {
                         int level = Integer.parseInt(temp);
                         int numLives = findNumberOfLives();
                         int difficulty = difficultyCounter();
+                        //before starting new activity release previous mediaplayer
+                        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                            public void onCompletion(MediaPlayer mp) {
+                                mp.release();
+
+                            };
+                        });
 
                         if (difficultyCounter() == 11) {
                             StartGamePlayer(nextAnswerNumberAccordingToLevelDifficulty(level, difficulty), updatePoints(pointManager()), numLives, difficulty, level + 1);
@@ -647,6 +706,10 @@ public class GamePlayer extends AppCompatActivity {
                 this.getPackageName());
         if (sound_id != 0) {
             mediaPlayer = MediaPlayer.create(this, sound_id);
+            try { mediaPlayer.setDataSource(this,Uri.parse(soundName)); } catch (Exception e) {}
+            try { mediaPlayer.prepare(); } catch (Exception e) {}
+
+
         }
         return mediaPlayer;
     }

@@ -11,10 +11,12 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -136,6 +138,21 @@ public class MultipleChoice extends AppCompatActivity {
         Button multiple2 = (Button) findViewById(R.id.multiple_2_btn);
         Button multiple3 = (Button) findViewById(R.id.multiple_3_btn);
         Button multiple4 = (Button) findViewById(R.id.multiple_4_btn);
+
+        //set the size of the buttons according to display
+        Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
+        int width = display.getWidth();
+        int height = display.getHeight();
+        int btn_width = Math.round(width/10);
+        int btn_height = Math.round(height/20);
+        multiple1.setWidth(btn_width);
+        multiple1.setHeight(btn_height);
+        multiple2.setWidth(btn_width);
+        multiple2.setHeight(btn_height);
+        multiple3.setWidth(btn_width);
+        multiple3.setHeight(btn_height);
+        multiple4.setWidth(btn_width);
+        multiple4.setHeight(btn_height);
 
         ArrayList<String> arrayList = new ArrayList<>();
         arrayList.add(allWords[0]);
@@ -480,6 +497,7 @@ public class MultipleChoice extends AppCompatActivity {
             imageView.setBackgroundResource(R.drawable.difficulty10);
         } else {
             imageView.setBackgroundResource(R.drawable.difficulty1);
+            imageView.setTag("1");
         }
 
 
@@ -487,9 +505,14 @@ public class MultipleChoice extends AppCompatActivity {
 
 
     private void initiatePopupWindow() throws IOException {
-
+        Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
+        int width = display.getWidth();
+        int height = display.getHeight();
         final PopupWindow pw;
-
+        final Button multiple1 = (Button) findViewById(R.id.multiple_1_btn);
+        final  Button multiple2 = (Button) findViewById(R.id.multiple_2_btn);
+        final Button multiple3 = (Button) findViewById(R.id.multiple_3_btn);
+        final  Button multiple4 = (Button) findViewById(R.id.multiple_4_btn);
 
         //We need to get the instance of the LayoutInflater, use the context of this activity
         LayoutInflater inflater = (LayoutInflater) MultipleChoice.this
@@ -498,7 +521,14 @@ public class MultipleChoice extends AppCompatActivity {
         View layout = inflater.inflate(R.layout.pop_up_layout,
                 (ViewGroup) findViewById(R.id.pop_up_element));
         // create a 300px width and 470px height PopupWindow
-        pw = new PopupWindow(layout, 1100, 550, true);
+        pw = new PopupWindow(layout, height, width, false);
+        pw.setOutsideTouchable(false);
+        multiple1.setEnabled(false);
+        multiple2.setEnabled(false);
+        multiple3.setEnabled(false);
+        multiple4.setEnabled(false);
+
+
         TextView textView = (TextView) findViewById(R.id.pointBoard_textView);
         //save the high score
         saveHighScore(textView.getText().toString());
@@ -518,6 +548,10 @@ public class MultipleChoice extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 pw.dismiss();
+                multiple1.setEnabled(true);
+                multiple2.setEnabled(true);
+                multiple3.setEnabled(true);
+                multiple4.setEnabled(true);
                 Random random = new Random();
                 String answerNumber = String.valueOf(random.nextInt(225 - 0) + 0);
                 startMultipleChoice(answerNumber, "0", 5, 1, 1);

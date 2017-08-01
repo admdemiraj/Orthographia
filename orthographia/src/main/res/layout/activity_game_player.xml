@@ -89,6 +89,7 @@
         <ImageView
             android:id="@+id/heart_image_view"
             android:layout_width="80dp"
+            android:tag="5"
             android:layout_height="wrap_content"
             android:background="@drawable/lifeboard"
             android:layout_marginBottom="12dp" />
@@ -119,9 +120,12 @@
             android:layout_width="wrap_content"
             android:layout_height="252dp"
             android:id="@+id/difficulty_image_view"
+            android:tag="1"
             android:background="@drawable/difficulty1" />
 
     </LinearLayout>
+
+
 
 
 </RelativeLayout>

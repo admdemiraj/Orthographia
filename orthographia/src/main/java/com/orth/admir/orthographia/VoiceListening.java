@@ -107,8 +107,8 @@ public class VoiceListening extends AppCompatActivity {
 
 
 
-
-        playMedia(getVideoAccordingToAnswerNumber(answerNumber));
+MediaPlayer mediaPlayer = getVideoAccordingToAnswerNumber(answerNumber);
+        playMedia(mediaPlayer);
         findWordsMeaning(explainButton,answerNumber);
 
         changeDifficulty(easyButton, mediumButton, hardButton);
@@ -117,7 +117,7 @@ public class VoiceListening extends AppCompatActivity {
         setDifficultyForTheNewLevel(answerNumber, easyButton, mediumButton, hardButton);
 
 
-        checkIfTheAnswerIsCorrect(answerNumber, editText);
+        checkIfTheAnswerIsCorrect(answerNumber, editText,mediaPlayer);
 
         getSolution(solveButton, editText, answerNumber);
 
@@ -140,6 +140,8 @@ public class VoiceListening extends AppCompatActivity {
                     this.getPackageName());
             if (sound_id != 0) {
                 mediaPlayer = MediaPlayer.create(this, sound_id);
+                try { mediaPlayer.setDataSource(this,Uri.parse(soundName)); } catch (Exception e) {}
+                try { mediaPlayer.prepare(); } catch (Exception e) {}
             }
         return mediaPlayer;
 
@@ -341,13 +343,17 @@ public class VoiceListening extends AppCompatActivity {
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mediaPlayer.start();
+                //mediaPlayer.start();
+                onPrepared(mediaPlayer);
+
             }
         });
 
     }
-
-    public void checkIfTheAnswerIsCorrect(final String answerNumber, final EditText editText) {
+    public void onPrepared(MediaPlayer player) {
+        player.start();
+    }
+    public void checkIfTheAnswerIsCorrect(final String answerNumber, final EditText editText,final MediaPlayer mediaPlayer) {
         Button checkIfCorrect = (Button) findViewById(R.id.check_if_correct);
 
         final MediaPlayer mediaPlayerRight = MediaPlayer.create(this, R.raw.correct);
@@ -362,6 +368,13 @@ public class VoiceListening extends AppCompatActivity {
 
                         mediaPlayerRight.start();
                         Toast.makeText(getBaseContext(), "ΣΩΣΤΑ!!!!", Toast.LENGTH_SHORT).show();
+                        //release previous media player before starting new activity
+                        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                            public void onCompletion(MediaPlayer mp) {
+                                mp.release();
+
+                            };
+                        });
                         startVoiceListening(sellectRandomWordAccordingToDifficulty());
                         finish();
 

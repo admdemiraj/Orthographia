@@ -245,6 +245,7 @@ public class Kremala extends AppCompatActivity {
     private void initializeLetters(String word) {
         Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
         int height = display.getHeight();
+        int width = display.getWidth();
         LinearLayout.LayoutParams a = new LinearLayout.LayoutParams(0,height/9);
         //a.width = 0;
 
@@ -262,127 +263,127 @@ public class Kremala extends AppCompatActivity {
             //letterButton.setTypeface(Typeface.DEFAULT_BOLD);
             //letterButton.setTextColor(Color.parseColor("#a4c639"));
             letterButton.setTextColor(Color.BLUE);
-            letterButton.setTextSize(14);
+            letterButton.setTextSize(width/105);
 
-
+float letterTextSize = width/97;
             if (i == 0) {
                 letterButton.setId(R.id.word_btn_1);
                 if (letterButton.getText().equals("_")) {
                     wordListener(letterButton);
                     letterButton.setTextColor(Color.RED);
-                    letterButton.setTextSize(16);
+                    letterButton.setTextSize(letterTextSize);
                 }
             } else if (i == 1) {
                 letterButton.setId(R.id.word_btn_2);
                 if (letterButton.getText().equals("_")) {
                     wordListener(letterButton);
                     letterButton.setTextColor(Color.RED);
-                    letterButton.setTextSize(16);
+                    letterButton.setTextSize(letterTextSize);
                 }
             } else if (i == 2) {
                 letterButton.setId(R.id.word_btn_3);
                 if (letterButton.getText().equals("_")) {
                     wordListener(letterButton);
                     letterButton.setTextColor(Color.RED);
-                    letterButton.setTextSize(16);
+                    letterButton.setTextSize(letterTextSize);
                 }
             } else if (i == 3) {
                 letterButton.setId(R.id.word_btn_4);
                 if (letterButton.getText().equals("_")) {
                     wordListener(letterButton);
                     letterButton.setTextColor(Color.RED);
-                    letterButton.setTextSize(16);
+                    letterButton.setTextSize(letterTextSize);
                 }
             } else if (i == 4) {
                 letterButton.setId(R.id.word_btn_5);
                 if (letterButton.getText().equals("_")) {
                     wordListener(letterButton);
                     letterButton.setTextColor(Color.RED);
-                    letterButton.setTextSize(16);
+                    letterButton.setTextSize(letterTextSize);
                 }
             } else if (i == 5) {
                 letterButton.setId(R.id.word_btn_6);
                 if (letterButton.getText().equals("_")) {
                     wordListener(letterButton);
                     letterButton.setTextColor(Color.RED);
-                    letterButton.setTextSize(16);
+                    letterButton.setTextSize(letterTextSize);
                 }
             } else if (i == 6) {
                 letterButton.setId(R.id.word_btn_7);
                 if (letterButton.getText().equals("_")) {
                     wordListener(letterButton);
                     letterButton.setTextColor(Color.RED);
-                    letterButton.setTextSize(16);
+                    letterButton.setTextSize(letterTextSize);
                 }
             } else if (i == 7) {
                 letterButton.setId(R.id.word_btn_8);
                 wordListener(letterButton);
                 if (letterButton.getText().equals("_")) {
                     letterButton.setTextColor(Color.RED);
-                    letterButton.setTextSize(16);
+                    letterButton.setTextSize(letterTextSize);
                 }
             } else if (i == 8) {
                 letterButton.setId(R.id.word_btn_9);
                 if (letterButton.getText().equals("_")) {
                     wordListener(letterButton);
                     letterButton.setTextColor(Color.RED);
-                    letterButton.setTextSize(16);
+                    letterButton.setTextSize(letterTextSize);
                 }
             } else if (i == 9) {
                 letterButton.setId(R.id.word_btn_10);
                 if (letterButton.getText().equals("_")) {
                     wordListener(letterButton);
                     letterButton.setTextColor(Color.RED);
-                    letterButton.setTextSize(16);
+                    letterButton.setTextSize(letterTextSize);
                 }
             } else if (i == 10) {
                 letterButton.setId(R.id.word_btn_11);
                 if (letterButton.getText().equals("_")) {
                     wordListener(letterButton);
                     letterButton.setTextColor(Color.RED);
-                    letterButton.setTextSize(16);
+                    letterButton.setTextSize(letterTextSize);
                 }
             } else if (i == 11) {
                 letterButton.setId(R.id.word_btn_12);
                 if (letterButton.getText().equals("_")) {
                     wordListener(letterButton);
                     letterButton.setTextColor(Color.RED);
-                    letterButton.setTextSize(16);
+                    letterButton.setTextSize(letterTextSize);
                 }
             } else if (i == 12) {
                 letterButton.setId(R.id.word_btn_13);
                 if (letterButton.getText().equals("_")) {
                     wordListener(letterButton);
                     letterButton.setTextColor(Color.RED);
-                    letterButton.setTextSize(16);
+                    letterButton.setTextSize(letterTextSize);
                 }
             } else if (i == 13) {
                 letterButton.setId(R.id.word_btn_14);
                 if (letterButton.getText().equals("_")) {
                     wordListener(letterButton);
                     letterButton.setTextColor(Color.RED);
-                    letterButton.setTextSize(16);
+                    letterButton.setTextSize(letterTextSize);
                 }
             } else if (i == 14) {
                 letterButton.setId(R.id.word_btn_15);
                 if (letterButton.getText().equals("_")) {
                     wordListener(letterButton);
                     letterButton.setTextColor(Color.RED);
-                    letterButton.setTextSize(16);
+                    letterButton.setTextSize(letterTextSize);
                 }
             } else if (i == 15) {
                 letterButton.setId(R.id.word_btn_16);
                 if (letterButton.getText().equals("_")) {
                     wordListener(letterButton);
                     letterButton.setTextColor(Color.RED);
-                    letterButton.setTextSize(16);
+                    letterButton.setTextSize(letterTextSize);
                 }
             } else {
                 letterButton.setId(R.id.word_btn_17);
                 if (letterButton.getText().equals("_")) {
                     wordListener(letterButton);
                     letterButton.setTextColor(Color.RED);
-                    letterButton.setTextSize(16);
+                    letterButton.setTextSize(letterTextSize);
                 }
             }
 
@@ -403,22 +404,29 @@ public class Kremala extends AppCompatActivity {
         Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
         int width = display.getWidth();
         int height = display.getHeight();
-        TableRow.LayoutParams a = new TableRow.LayoutParams(width/14,height/10);
-        //a.weight = 80/vowels.size();
+        TableRow.LayoutParams a = new TableRow.LayoutParams(height/8,width/14);
 
+        //a.weight = 80/vowels.size();
+         float vowelSize = width/100;
         for (int i = 0; i < vowels.size(); i++) {
             Button alphabetButton = new Button(this);
             alphabetButton.setAllCaps(false);
+
             //Put the first 6 letters of the vowels in the first row and the rest in the second
             if (i < Math.ceil(vowels.size() / 2)) {
                 //alphabetButton.setLayoutParams(new TableRow.LayoutParams(90, 80));
                 alphabetButton.setLayoutParams(a);
+
+                alphabetButton.setTextSize(vowelSize);
                 alphabetButton.setText(vowels.get(i));
                 tableRow1.addView(alphabetButton);
             } else {
                 //alphabetButton.setLayoutParams(new TableRow.LayoutParams(90, 80));
                 alphabetButton.setLayoutParams(a);
                 alphabetButton.setText(vowels.get(i));
+
+                alphabetButton.setTextSize(vowelSize);
+
                 tableRow2.addView(alphabetButton);
             }
             if (i == 0) {
@@ -586,16 +594,20 @@ private void displayLetter(final int wordPosition){
         }
     }
     private void initiatePopupWindow() throws IOException {
-
+        Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
+        int width = display.getWidth();
+        int height = display.getHeight();
         final PopupWindow pw;
-
+        final Button checkIfCorrectButton = (Button) findViewById(R.id.check_if_correct_btn);
 
         //We need to get the instance of the LayoutInflater, use the context of this activity
         LayoutInflater inflater = (LayoutInflater) Kremala.this
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //Inflate the view from a predefined XML layout
         View layout = inflater.inflate(R.layout.pop_up_layout, (ViewGroup) findViewById(R.id.pop_up_element));
-        pw = new PopupWindow(layout, 1100, 550, true);
+        pw = new PopupWindow(layout, height, width, false);
+        checkIfCorrectButton.setEnabled(false);
+
         TextView titleTxtView = (TextView) findViewById(R.id.title_text);
         saveHighScore(titleTxtView.getText().toString());
         String achievement = checkAchievement(Integer.parseInt(getHighScore()));
@@ -613,6 +625,7 @@ private void displayLetter(final int wordPosition){
             public void onClick(View v) {
                 pw.dismiss();
                 //reset all resources nad start a new game
+                checkIfCorrectButton.setEnabled(true);
                 LinearLayout letterLinearLayout = (LinearLayout) findViewById(R.id.letters_linear_layout);
                 letterLinearLayout.removeAllViews();
 
@@ -632,7 +645,7 @@ private void displayLetter(final int wordPosition){
                     dummyImgView.setImageResource(R.drawable.kremalaa);
                     dummyImgView.setTag("a");
                 TextView titleTxtView = (TextView) findViewById(R.id.title_text);
-                titleTxtView.setText("000");
+                titleTxtView.setText("100");
 
 
             }
